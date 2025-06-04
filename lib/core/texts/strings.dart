@@ -1,5 +1,5 @@
 class Strings {
-  static String get appName => "Flutter Fast Template";
+  static String get appName => "Debout!";
 
   // force update page
   static String get forceUpdateTitle => "Votre application n'est pas à jour";
