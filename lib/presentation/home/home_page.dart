@@ -66,11 +66,13 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
     return Stack(
       children: [
         WebViewWidget(controller: controller),
-        AnimatedOpacity(
-          opacity: isLoading ? 1.0 : 0.0,
-          curve: Curves.easeInOut,
-          duration: AnimationDurations.long,
-          child: const SplashPage(),
+        IgnorePointer(
+          child: AnimatedOpacity(
+            opacity: isLoading ? 1.0 : 0.0,
+            curve: Curves.easeInOut,
+            duration: AnimationDurations.long,
+            child: const SplashPage(),
+          ),
         ),
       ],
     );
