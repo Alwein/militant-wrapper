@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435674275564",
+    "project_id": "debout-1eb87",
+    "storage_bucket": "debout-1eb87.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435674275564:android:4cc706a5cf6a44d88dcfc9",
+        "android_client_info": {
+          "package_name": "fr.debout"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrsENnNNicqu-2HwwuhOvmtN8D79XwVqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

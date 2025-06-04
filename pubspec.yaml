@@ -1,0 +1,74 @@
+name: militant_wrapper
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # firebase - ⚠️ update ios/Podfile l35 when updating firebase packages
+  firebase_core: "3.11.0"
+  firebase_crashlytics: "4.3.2"
+  firebase_remote_config: "5.4.0"
+
+  # State Management
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+  get_it: ^8.0.3
+
+  # app
+  flutter_dotenv: ^5.2.1
+  shared_preferences: ^2.5.3
+  logger: ^2.5.0
+  freezed_annotation: ^2.4.4
+  google_fonts: ^6.2.1
+  url_launcher: ^6.3.1
+  carousel_slider: ^5.0.0
+  package_info_plus: ^8.3.0
+  webview_flutter: ^4.10.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  sqflite_common_ffi: ^2.3.4+4
+  flutter_lints: ^4.0.0
+
+  # file generation
+  flutter_launcher_icons: "0.13.1"
+  flutter_native_splash: "2.4.0"
+
+  # bloc
+  bloc_test: ^9.1.7
+
+  # code generation
+  freezed: ^2.5.7
+  build_runner: ^2.4.13
+
+flutter:
+  uses-material-design: true
+  assets:
+    - env/
+    - assets/
+    - assets/images/
+# fonts:
+#     - family: PlayfairDisplay
+#       fonts:
+#         - asset: assets/fonts/PlayfairDisplay-Regular.ttf
+#         - asset: assets/fonts/PlayfairDisplay-Italic.ttf
+#         - asset: assets/fonts/PlayfairDisplay-Bold.ttf
+#         - asset: assets/fonts/PlayfairDisplay-BoldItalic.ttf
+#         - asset: assets/fonts/PlayfairDisplay-Black.ttf
+#         - asset: assets/fonts/PlayfairDisplay-BlackItalic.ttf
+#         - asset: assets/fonts/PlayfairDisplay-ExtraBold.ttf
+#         - asset: assets/fonts/PlayfairDisplay-ExtraBoldItalic.ttf
+#         - asset: assets/fonts/PlayfairDisplay-Medium.ttf
+#         - asset: assets/fonts/PlayfairDisplay-MediumItalic.ttf
+#         - asset: assets/fonts/PlayfairDisplay-SemiBold.ttf
+#         - asset: assets/fonts/PlayfairDisplay-SemiBoldItalic.ttf
