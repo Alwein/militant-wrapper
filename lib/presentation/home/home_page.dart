@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:militant_wrapper/core/styles/app_colors.dart';
 import 'package:militant_wrapper/core/styles/dimens.dart';
 import 'package:militant_wrapper/presentation/app/bloc/app_bloc.dart';
 import 'package:militant_wrapper/presentation/splash/splas_page.dart';
@@ -11,8 +12,19 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: _WebView(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/images/appbar.png",
+          width: 120,
+          height: 120,
+        ),
+        centerTitle: false,
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: const _WebView(),
     );
   }
 }
