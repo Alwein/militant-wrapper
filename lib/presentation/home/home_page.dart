@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:militant_wrapper/core/styles/dimens.dart';
 import 'package:militant_wrapper/presentation/app/bloc/app_bloc.dart';
+import 'package:militant_wrapper/presentation/splash/splas_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -22,10 +24,11 @@ class _WebView extends StatefulWidget {
   State<_WebView> createState() => _WebViewState();
 }
 
-class _WebViewState extends State<_WebView> {
+class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin {
   final controller = WebViewController();
 
   late final String url;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -38,6 +41,11 @@ class _WebViewState extends State<_WebView> {
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) {
             return NavigationDecision.navigate;
+          },
+          onPageFinished: (String url) {
+            setState(() {
+              isLoading = false;
+            });
           },
         ),
       )
@@ -55,6 +63,16 @@ class _WebViewState extends State<_WebView> {
 
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(controller: controller);
+    return Stack(
+      children: [
+        WebViewWidget(controller: controller),
+        AnimatedOpacity(
+          opacity: isLoading ? 1.0 : 0.0,
+          curve: Curves.easeInOut,
+          duration: AnimationDurations.long,
+          child: const SplashPage(),
+        ),
+      ],
+    );
   }
 }
