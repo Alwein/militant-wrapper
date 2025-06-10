@@ -12,19 +12,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          "assets/images/appbar.png",
-          width: 120,
-          height: 120,
-        ),
-        centerTitle: false,
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: const _WebView(),
+    return const Scaffold(
+      backgroundColor: AppColors.secondary,
+      body: _WebView(),
     );
   }
 }
@@ -77,7 +67,10 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        WebViewWidget(controller: controller),
+        SafeArea(
+          bottom: false,
+          child: WebViewWidget(controller: controller),
+        ),
         IgnorePointer(
           child: AnimatedOpacity(
             opacity: isLoading ? 1.0 : 0.0,
