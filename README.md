@@ -26,7 +26,7 @@ string variable `remote_url` is used to update the remote url for the app
 ⚠️ For hotfix, you can only update the `remote_url` but you need to release a new version of the app since firebase remote config is not updated with 100% of the users.
 
 ### How to deploy the app ?
-Run `sh ./scripts/release.sh <version_number>`
-Example: `sh ./scripts/release.sh 1.0.0`
+Run `sh ./scripts/release_militant_wrapper.sh <version_number>`
+Example: `sh ./scripts/release_militant_wrapper.sh 1.0.0`
 
 // TODO: Ajouter un onboarding + notifs

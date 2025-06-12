@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# how to use: sh ./scripts/release_militant_wrapper.sh <version_number>
 
 upgrade_version() {
   git checkout main
