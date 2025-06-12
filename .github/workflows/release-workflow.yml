@@ -143,6 +143,12 @@ jobs:
         run: |
           find . -name "Podfile" -execdir pod install \;
 
+      - name: Install FlutterFire CLI
+        shell: bash
+        run: |
+          dart pub global activate flutterfire_cli
+          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
       - name: Write Apple prod API Key
         shell: bash
         run: |
@@ -151,6 +157,7 @@ jobs:
         env:
           APPLE_PROD_API_KEY: ${{ secrets.APPLE_PROD_API_KEY }}
           APPLE_PROD_API_KEY_B64: ${{ secrets.APPLE_PROD_API_KEY_B64 }}
+
 
       - name: Set up a temporary keychain for code signing
         shell: bash
