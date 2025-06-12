@@ -6,7 +6,7 @@ Edit `assets_generation/AppTemplate.fig`
 Run `sh ./scripts/generate_launcher_icons.sh`
 Run `sh ./scripts/generate_splash_screens.sh`
 
-### 2. How to update app links to the app store ? [TODO:]
+### 2. How to update app links to the app store ? [TODO: Android]
 After registering your app on the play store and app store, you need to update the links in the code
 - open `lib/core/texts/app_links.dart`
 Replace androidAppStoreUrl with the link to your app on the play store
@@ -20,6 +20,13 @@ string variable `remote_url` is used to update the remote url for the app
 ### How to update url for the app ?
 1. Update `env/.env` with the new url
 2. Update `remote_url` in remote config
-3. Release a new version of the app
+3. Upload a new PROD_RUNTIME_ENV_B64 to github secrets
+4. Release a new version of the app
 
 ⚠️ For hotfix, you can only update the `remote_url` but you need to release a new version of the app since firebase remote config is not updated with 100% of the users.
+
+### How to deploy the app ?
+Run `sh ./scripts/release.sh <version_number>`
+Example: `sh ./scripts/release.sh 1.0.0`
+
+// TODO: Ajouter un onboarding + notifs
