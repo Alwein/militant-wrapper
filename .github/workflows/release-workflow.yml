@@ -163,7 +163,7 @@ jobs:
           export APP_STORE_CONNECT_ISSUER_ID="$APPLE_PROD_API_ISSUER"
           export APP_STORE_CONNECT_KEY_IDENTIFIER="$APPLE_PROD_API_KEY"
           export APP_STORE_CONNECT_PRIVATE_KEY=`cat ios/AuthKey_"$APPLE_PROD_API_KEY".p8`
-          app-store-connect fetch-signing-files fr.fabrique.social.gouv.passemploi \
+          app-store-connect fetch-signing-files fr.debout \
             --platform IOS \
             --type IOS_APP_STORE \
             --certificate-key=@env:APPLE_P12_PRIVATE_KEY \
