@@ -9,6 +9,4 @@ class OnboardingState with _$OnboardingState {
 
 enum OnboardingPageIndex {
   first,
-  second,
-  third,
 }

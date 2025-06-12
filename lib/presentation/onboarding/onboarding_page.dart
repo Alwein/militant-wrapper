@@ -7,8 +7,6 @@ import 'package:militant_wrapper/core/styles/margins.dart';
 import 'package:militant_wrapper/core/texts/strings.dart';
 import 'package:militant_wrapper/presentation/onboarding/bloc/onboarding_bloc.dart';
 import 'package:militant_wrapper/presentation/onboarding/widgets/onboarding_step_1.dart';
-import 'package:militant_wrapper/presentation/onboarding/widgets/onboarding_step_2.dart';
-import 'package:militant_wrapper/presentation/onboarding/widgets/onboarding_step_3.dart';
 import 'package:militant_wrapper/presentation/widgets/primary_button.dart';
 import 'package:militant_wrapper/presentation/widgets/texts.dart';
 
@@ -47,27 +45,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
             floatingActionButton: PrimaryButton(
               backgroundColor: AppColors.content,
               textColor: Colors.white,
-              text: switch (state.currentPage) {
-                OnboardingPageIndex.third => Strings.done,
-                _ => Strings.next,
-              },
-              icon: switch (state.currentPage) {
-                OnboardingPageIndex.third => Icons.check,
-                _ => Icons.arrow_forward,
-              },
+              text: Strings.done,
+              icon: Icons.check,
               iconRight: true,
               onPressed: () {
                 HapticFeedback.mediumImpact();
-                final shouldFinishOnboarding = switch (state.currentPage) {
-                  OnboardingPageIndex.third => true,
-                  _ => false,
-                };
-
-                if (shouldFinishOnboarding) {
-                  Navigator.of(context).pop();
-                } else {
-                  _carouselController.nextPage();
-                }
+                Navigator.of(context).pop();
               },
             ),
             body: Column(
@@ -80,8 +63,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     carouselController: _carouselController,
                     items: const [
                       OnboardingStep1(key: ValueKey("step_0")),
-                      OnboardingStep2(key: ValueKey("step_1")),
-                      OnboardingStep3(key: ValueKey("step_2")),
                     ],
                     options: CarouselOptions(
                       height: double.infinity,
@@ -109,15 +90,9 @@ class _Stepper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingBloc, OnboardingState>(
       builder: (context, state) {
-        final visibleSteps = switch (state.currentPage) {
-          OnboardingPageIndex.first => 1,
-          OnboardingPageIndex.second => 2,
-          OnboardingPageIndex.third => 3,
-        };
+        final visibleSteps = switch (state.currentPage) { OnboardingPageIndex.first => 1 };
         final visiblesBars = switch (state.currentPage) {
           OnboardingPageIndex.first => 0,
-          OnboardingPageIndex.second => 1,
-          OnboardingPageIndex.third => 2,
         };
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: Margins.spacingM),
