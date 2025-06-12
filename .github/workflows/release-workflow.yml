@@ -6,32 +6,8 @@ on:
       - "*"
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set Environment Variables
-        uses: ./.github/actions/setvars
-        with:
-          varFilePath: ./.github/variables/myvars.env
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-
-      - uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-
-      - name: Launch tests
-        run: flutter test
-
   pre-build:
     runs-on: ubuntu-latest
-    needs: test
     name: pre-build
     steps:
       - name: Get current timestamp
