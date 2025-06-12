@@ -190,9 +190,8 @@ jobs:
           --release \
           --build-number=${{ needs.pre-build.outputs.date }} \
           --export-options-plist=ios/prod_export_options.plist \
-          --no-pub \
-          --verbose
-
+          --no-pub
+          
       - name: Deploy app to App Store Connect
         shell: bash
         run: |
