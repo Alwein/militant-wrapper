@@ -6,6 +6,7 @@ import 'package:militant_wrapper/core/styles/dimens.dart';
 import 'package:militant_wrapper/core/styles/margins.dart';
 import 'package:militant_wrapper/presentation/app/bloc/app_bloc.dart';
 import 'package:militant_wrapper/presentation/splash/splas_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -44,7 +45,17 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onNavigationRequest: (NavigationRequest request) {
+          onNavigationRequest: (NavigationRequest request) async {
+            final uri = Uri.parse(request.url);
+            // Définir le domaine de base à partir de l'URL initiale
+            final baseDomain = Uri.parse(url).host;
+            if (uri.host != baseDomain && uri.scheme.startsWith('http')) {
+              // Lien externe, ouvrir dans le navigateur natif
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+                return NavigationDecision.prevent;
+              }
+            }
             return NavigationDecision.navigate;
           },
           onPageFinished: (String url) {
