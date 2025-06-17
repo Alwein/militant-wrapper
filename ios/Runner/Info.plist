@@ -47,5 +47,12 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false />
+		<key>NSUserNotificationUsageDescription</key>
+		<string>Nous avons besoin de vous envoyer des notifications pour vous tenir informé des
+			informations importantes.</string>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>remote-notification</string>
+		</array>
 	</dict>
 </plist>

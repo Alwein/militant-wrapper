@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:militant_wrapper/core/styles/app_colors.dart';
 import 'package:militant_wrapper/core/styles/dimens.dart';
+import 'package:militant_wrapper/core/styles/margins.dart';
 import 'package:militant_wrapper/presentation/app/bloc/app_bloc.dart';
 import 'package:militant_wrapper/presentation/splash/splas_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -31,6 +32,8 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
 
   late final String url;
   bool isLoading = true;
+  bool canGoBack = false;
+  bool canGoForward = false;
 
   @override
   void initState() {
@@ -48,10 +51,22 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
             setState(() {
               isLoading = false;
             });
+            _updateNavigationState();
           },
         ),
       )
       ..loadRequest(Uri.parse(url));
+  }
+
+  Future<void> _updateNavigationState() async {
+    final canBack = await controller.canGoBack();
+    final canForward = await controller.canGoForward();
+    if (mounted) {
+      setState(() {
+        canGoBack = canBack;
+        canGoForward = canForward;
+      });
+    }
   }
 
   void _getUrl() {
@@ -71,6 +86,27 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
           bottom: false,
           child: WebViewWidget(controller: controller),
         ),
+        if (!isLoading)
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: Margins.spacingBase,
+            child: Row(
+              children: [
+                if (canGoBack)
+                  FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(360),
+                    ),
+                    backgroundColor: AppColors.secondary,
+                    onPressed: () async {
+                      await controller.goBack();
+                      _updateNavigationState();
+                    },
+                    child: const Icon(Icons.arrow_back, color: AppColors.content),
+                  ),
+              ],
+            ),
+          ),
         IgnorePointer(
           child: AnimatedOpacity(
             opacity: isLoading ? 1.0 : 0.0,
