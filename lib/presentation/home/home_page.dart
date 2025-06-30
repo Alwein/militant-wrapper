@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -36,6 +37,22 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
   bool canGoBack = false;
   bool canGoForward = false;
 
+  bool _isExternalLink(String requestUrl, String baseUrl) {
+    try {
+      final requestUri = Uri.parse(requestUrl);
+      final baseUri = Uri.parse(baseUrl);
+
+      final isDifferentHost = requestUri.host != baseUri.host;
+      final isHttpScheme = requestUri.scheme.startsWith('http');
+      final isNotSubdomain = !requestUri.host.contains(baseUri.host) && !baseUri.host.contains(requestUri.host);
+      final isNotInternalPath = !requestUrl.startsWith(baseUrl);
+
+      return isDifferentHost && isHttpScheme && isNotSubdomain && isNotInternalPath;
+    } catch (e) {
+      return true;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -46,14 +63,32 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) async {
-            final uri = Uri.parse(request.url);
-            // Définir le domaine de base à partir de l'URL initiale
-            final baseDomain = Uri.parse(url).host;
-            if (uri.host != baseDomain && uri.scheme.startsWith('http')) {
-              // Lien externe, ouvrir dans le navigateur natif
-              if (await canLaunchUrl(uri)) {
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
+            if (_isExternalLink(request.url, url)) {
+              if (defaultTargetPlatform == TargetPlatform.android) {
+                try {
+                  final uri = Uri.parse(request.url);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  }
+                } catch (e) {
+                  try {
+                    final uri = Uri.parse(request.url);
+                    await launchUrl(uri);
+                  } catch (e) {
+                    return NavigationDecision.navigate;
+                  }
+                }
                 return NavigationDecision.prevent;
+              } else {
+                try {
+                  final uri = Uri.parse(request.url);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    return NavigationDecision.prevent;
+                  }
+                } catch (e) {
+                  return NavigationDecision.navigate;
+                }
               }
             }
             return NavigationDecision.navigate;
@@ -65,8 +100,13 @@ class _WebViewState extends State<_WebView> with SingleTickerProviderStateMixin 
             _updateNavigationState();
           },
         ),
-      )
-      ..loadRequest(Uri.parse(url));
+      );
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      controller.setBackgroundColor(Colors.transparent);
+    }
+
+    controller.loadRequest(Uri.parse(url));
   }
 
   Future<void> _updateNavigationState() async {
