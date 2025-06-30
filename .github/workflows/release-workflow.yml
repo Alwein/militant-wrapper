@@ -71,7 +71,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.PROD_GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: fr.debout
           releaseName: ${{github.ref_name}}
-          releaseFiles: build/app/outputs/bundle/release/app.aab
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
           status: completed
 
