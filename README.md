@@ -1,16 +1,10 @@
-### 1. How to update app icon and splash screen ?
+### How to update app icon and splash screen ?
 Edit `assets_generation/AppTemplate.fig`
     - Export each individual icon assets in `assets_generation/icon`
     - Export each individual splash screen assets in `assets_generation/splash_screen`
 
 Run `sh ./scripts/generate_launcher_icons.sh`
 Run `sh ./scripts/generate_splash_screens.sh`
-
-### 2. How to update app links to the app store ?
-After registering your app on the play store and app store, you need to update the links in the code
-- open `lib/core/texts/app_links.dart`
-Replace androidAppStoreUrl with the link to your app on the play store
-Replace iosAppStoreUrl with the link to your app on the app store
 
 ### How Firebase Remote Config works ?
 string variable `min_app_version_ios` is used to check if the app is up to date on the app store
